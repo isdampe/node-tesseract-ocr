@@ -192,4 +192,5 @@ export type Config = Partial<{
  * @param config - any OCR options and control parameters
  * @returns default output format is text
  */
+export function recognize(input: Input, config: Config & { presets: (string | Preset)[] & ["pdf"] }): Promise<Buffer>
 export function recognize(input: Input, config?: Config): Promise<string>

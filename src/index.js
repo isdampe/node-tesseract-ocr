@@ -16,7 +16,11 @@ function recognize(input, config = {}) {
   if (config.debug) log("command", command)
 
   return new Promise((resolve, reject) => {
-    const child = exec(command, (error, stdout, stderr) => {
+    const opts = {}
+    if (!config["tessdata-dir"] && config.presets && Array.isArray(config.presets) && config.presets.includes("pdf"))
+      opts.encoding = "buffer"
+
+    const child = exec(command, opts, (error, stdout, stderr) => {
       if (config.debug) log(stderr)
       if (error) reject(error)
       resolve(stdout)
