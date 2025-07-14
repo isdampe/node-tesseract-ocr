@@ -20,7 +20,10 @@ function recognize(input, config = {}) {
     if (!config["tessdata-dir"] && config.presets && Array.isArray(config.presets) && config.presets.includes("pdf"))
       opts.encoding = "buffer"
 
-    const child = exec(command, opts, (error, stdout, stderr) => {
+    const child = exec(command, {
+      ...opts,
+      maxBuffer: 1024 * 1024 * 32
+    }, (error, stdout, stderr) => {
       if (config.debug) log(stderr)
       if (error) reject(error)
       resolve(stdout)
